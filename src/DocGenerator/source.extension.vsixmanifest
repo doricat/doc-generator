@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="DocGenerator.doricat.d02bda01-6342-4f43-96b6-17cb8f8f26a5" Version="1.0" Language="en-US" Publisher="doricat" />
         <DisplayName>DocGenerator</DisplayName>
-        <Description xml:space="preserve">Adds support to generate the selected type of document and copy it to clipboard in JSON or html format.</Description>
+        <Description xml:space="preserve">Adds support to generate the selected type of document and copy it to clipboard in json or html format.</Description>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
