@@ -25,6 +25,7 @@ namespace DocGenerator
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(DocGeneratorPackage.PackageGuidString)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
     public sealed class DocGeneratorPackage : AsyncPackage
     {
         /// <summary>
