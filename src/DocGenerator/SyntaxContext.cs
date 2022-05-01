@@ -11,7 +11,10 @@ namespace DocGenerator
             Syntax = syntax;
         }
 
-        public bool IntendedSyntax => Syntax is ClassDeclarationSyntax || Syntax is IdentifierNameSyntax || Syntax is GenericNameSyntax;
+        public bool IntendedSyntax => Syntax is ClassDeclarationSyntax classDeclaration
+                                      && classDeclaration.TypeParameterList == null
+                                      || Syntax is IdentifierNameSyntax
+                                      || Syntax is GenericNameSyntax;
 
         public Document Document { get; }
 
