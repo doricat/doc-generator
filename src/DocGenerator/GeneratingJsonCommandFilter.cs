@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
+using Newtonsoft.Json;
 
 namespace DocGenerator
 {
@@ -12,10 +14,14 @@ namespace DocGenerator
     {
         private readonly IOleCommandTarget _nextCommandTargetInChain;
         private readonly IWpfTextView _wpfTextView;
+        private readonly IDictionaryBuilderService _dictionaryBuilderService;
 
-        public GeneratingJsonCommandFilter(IVsTextView textView, IWpfTextView wpfTextView)
+        public GeneratingJsonCommandFilter(IVsTextView textView, 
+            IWpfTextView wpfTextView, 
+            IDictionaryBuilderService dictionaryBuilderService)
         {
             _wpfTextView = wpfTextView;
+            _dictionaryBuilderService = dictionaryBuilderService;
             textView.AddCommandFilter(this, out _nextCommandTargetInChain);
         }
 
@@ -51,7 +57,11 @@ namespace DocGenerator
                 {
                     if (x.IntendedSyntax)
                     {
-                        
+                        var dict = _dictionaryBuilderService.GenerateDictionary(x);
+                        if (dict.Any())
+                        {
+                            ClipboardSupport.SetClipboardData(JsonConvert.SerializeObject(dict));
+                        }
                     }
                 });
             }
@@ -80,9 +90,9 @@ namespace DocGenerator
             }
         }
 
-        public static void Register(IVsTextView textView, IWpfTextView wpfTextView)
+        public static void Register(IVsTextView textView, IWpfTextView wpfTextView, IDictionaryBuilderService dictionaryBuilderService)
         {
-            var _ = new GeneratingJsonCommandFilter(textView, wpfTextView);
+            var _ = new GeneratingJsonCommandFilter(textView, wpfTextView, dictionaryBuilderService);
         }
     }
 }

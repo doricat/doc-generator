@@ -18,10 +18,13 @@ namespace DocGenerator
         [Import]
         internal ITextDocumentFactoryService TextDocumentFactoryService { get; set; }
 
+        [Import]
+        internal IDictionaryBuilderService DictionaryBuilderService { get; set; }
+
         public void VsTextViewCreated(IVsTextView textViewAdapter)
         {
             var textView = EditorAdaptersFactoryService.GetWpfTextView(textViewAdapter);
-            GeneratingJsonCommandFilter.Register(textViewAdapter, textView);
+            GeneratingJsonCommandFilter.Register(textViewAdapter, textView, DictionaryBuilderService);
         }
     }
 }
