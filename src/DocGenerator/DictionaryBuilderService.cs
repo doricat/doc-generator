@@ -65,7 +65,24 @@ namespace DocGenerator
 
         protected void ParseIdentifierNameSyntax(IdentifierNameSyntax syntax, SemanticModel semanticModel, IDictionary<string, object> result)
         {
-            throw new NotImplementedException();
+            var symbolInfo = semanticModel.GetSymbolInfo(syntax);
+            if (symbolInfo.Symbol == null || symbolInfo.Symbol.Locations == null)
+            {
+                return;
+            }
+
+            foreach (var location in symbolInfo.Symbol.Locations)
+            {
+                if (location.SourceTree != null)
+                {
+                    var root = ThreadHelper.JoinableTaskFactory.Run(() => location.SourceTree.GetRootAsync());
+                    var node = root.FindNode(location.SourceSpan);
+                    if (node is ClassDeclarationSyntax classDeclarationSyntax)
+                    {
+                        ParseClassDeclarationSyntax(classDeclarationSyntax, semanticModel, result);
+                    }
+                }
+            }
         }
 
         protected void ParseGenericNameSyntax(GenericNameSyntax syntax, SemanticModel semanticModel, IDictionary<string, object> result)
