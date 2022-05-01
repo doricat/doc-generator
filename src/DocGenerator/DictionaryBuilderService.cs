@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.Shell;
@@ -34,6 +35,31 @@ namespace DocGenerator
 
         protected void ParseClassDeclarationSyntax(ClassDeclarationSyntax syntax, SemanticModel semanticModel, IDictionary<string, object> result)
         {
+            var members = syntax
+                .Members
+                .Where(x => x is PropertyDeclarationSyntax)
+                .Cast<PropertyDeclarationSyntax>()
+                .Where(x => x.IsPublicProperty() && x.IncludeGetterAccessor())
+                .ToList();
+
+            foreach (var property in members)
+            {
+                var identifier = property.Identifier.ValueText;
+                switch (property.Type)
+                {
+                    case PredefinedTypeSyntax predefinedTypeSyntax:
+                        break;
+                    case IdentifierNameSyntax identifierNameSyntax:
+                        break;
+                    case NullableTypeSyntax nullableTypeSyntax:
+                        break;
+                    case GenericNameSyntax genericNameSyntax:
+                        break;
+                    case ArrayTypeSyntax arrayTypeSyntax:
+                        break;
+                }
+            }
+
             throw new NotImplementedException();
         }
 
