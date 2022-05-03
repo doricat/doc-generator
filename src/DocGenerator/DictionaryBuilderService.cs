@@ -98,9 +98,38 @@ namespace DocGenerator
             return KeywordDefaultValue.GetValue(predefinedTypeSyntax.GetKeyword());
         }
 
-        protected object ParseIdentifierNameProperty(PropertyDeclarationSyntax propertyDeclarationSyntax, IdentifierNameSyntax identifierNameSyntax, SemanticModel semanticModel)
+        protected object ParseIdentifierNameProperty(PropertyDeclarationSyntax _, IdentifierNameSyntax identifierNameSyntax, SemanticModel semanticModel)
         {
-            return null;
+            var symbolInfo = semanticModel.GetSymbolInfo(identifierNameSyntax);
+            if (symbolInfo.Symbol == null || symbolInfo.Symbol.Locations == null)
+            {
+                return null;
+            }
+
+            var dict = new Dictionary<string, object>();
+            foreach (var location in symbolInfo.Symbol.Locations)
+            {
+                if (location.SourceTree != null)
+                {
+                    var root = ThreadHelper.JoinableTaskFactory.Run(() => location.SourceTree.GetRootAsync());
+                    var node = root.FindNode(location.SourceSpan);
+                    if (node is ClassDeclarationSyntax classDeclarationSyntax)
+                    {
+                        ParseClassDeclarationSyntax(classDeclarationSyntax, semanticModel, dict);
+                    }
+                }
+                else
+                {
+                    var fullName = symbolInfo.Symbol.ToDisplayString();
+                    var type = Type.GetType(fullName);
+                    if (type != null)
+                    {
+                        return Activator.CreateInstance(type);
+                    }
+                }
+            }
+
+            return dict;
         }
 
         protected object ParseNullableTypeProperty(PropertyDeclarationSyntax propertyDeclarationSyntax, NullableTypeSyntax nullableTypeSyntax)
