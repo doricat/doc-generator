@@ -51,6 +51,8 @@
     <Compile Include="GeneratingJsonCommandFilter.cs" />
     <Compile Include="GuidConstant.cs" />
     <Compile Include="IDictionaryBuilderService.cs" />
+    <Compile Include="KeywordDefaultValue.cs" />
+    <Compile Include="PredefinedTypeSyntaxExtensions.cs" />
     <Compile Include="PrgCmdsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DocGeneratorPackage.cs" />

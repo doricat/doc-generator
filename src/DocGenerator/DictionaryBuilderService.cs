@@ -48,19 +48,22 @@ namespace DocGenerator
                 switch (property.Type)
                 {
                     case PredefinedTypeSyntax predefinedTypeSyntax:
+                        result.Add(identifier, ParsePredefinedTypeProperty(property, predefinedTypeSyntax));
                         break;
                     case IdentifierNameSyntax identifierNameSyntax:
+                        result.Add(identifier, ParseIdentifierNameProperty(property, identifierNameSyntax, semanticModel));
                         break;
                     case NullableTypeSyntax nullableTypeSyntax:
+                        result.Add(identifier, ParseNullableTypeProperty(property, nullableTypeSyntax));
                         break;
                     case GenericNameSyntax genericNameSyntax:
+                        result.Add(identifier, ParseGenericNameProperty(property, genericNameSyntax, semanticModel));
                         break;
                     case ArrayTypeSyntax arrayTypeSyntax:
+                        result.Add(identifier, ParseArrayTypeProperty(property, arrayTypeSyntax));
                         break;
                 }
             }
-
-            throw new NotImplementedException();
         }
 
         protected void ParseIdentifierNameSyntax(IdentifierNameSyntax syntax, SemanticModel semanticModel, IDictionary<string, object> result)
@@ -88,6 +91,31 @@ namespace DocGenerator
         protected void ParseGenericNameSyntax(GenericNameSyntax syntax, SemanticModel semanticModel, IDictionary<string, object> result)
         {
             throw new NotImplementedException();
+        }
+
+        protected object ParsePredefinedTypeProperty(PropertyDeclarationSyntax _, PredefinedTypeSyntax predefinedTypeSyntax)
+        {
+            return KeywordDefaultValue.GetValue(predefinedTypeSyntax.GetKeyword());
+        }
+
+        protected object ParseIdentifierNameProperty(PropertyDeclarationSyntax propertyDeclarationSyntax, IdentifierNameSyntax identifierNameSyntax, SemanticModel semanticModel)
+        {
+            return null;
+        }
+
+        protected object ParseNullableTypeProperty(PropertyDeclarationSyntax propertyDeclarationSyntax, NullableTypeSyntax nullableTypeSyntax)
+        {
+            return null;
+        }
+
+        protected object ParseGenericNameProperty(PropertyDeclarationSyntax propertyDeclarationSyntax, GenericNameSyntax genericNameSyntax, SemanticModel semanticModel)
+        {
+            return null;
+        }
+
+        protected object ParseArrayTypeProperty(PropertyDeclarationSyntax propertyDeclarationSyntax, ArrayTypeSyntax arrayTypeSyntax)
+        {
+            return null;
         }
     }
 }
