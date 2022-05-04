@@ -47,6 +47,11 @@ namespace DocGenerator
             foreach (var property in members)
             {
                 var identifier = property.Identifier.ValueText;
+                if (result.ContainsKey(identifier))
+                {
+                    continue;
+                }
+
                 switch (property.Type)
                 {
                     case PredefinedTypeSyntax predefinedTypeSyntax:
