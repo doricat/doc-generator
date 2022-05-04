@@ -35,6 +35,8 @@ namespace DocGenerator
 
         protected void ParseClassDeclarationSyntax(ClassDeclarationSyntax syntax, SemanticModel semanticModel, IDictionary<string, object> result)
         {
+            ParseBaseTypeSyntax(syntax, semanticModel, result);
+
             var members = syntax
                 .Members
                 .Where(x => x is PropertyDeclarationSyntax)
@@ -91,6 +93,36 @@ namespace DocGenerator
         protected void ParseGenericNameSyntax(GenericNameSyntax syntax, SemanticModel semanticModel, IDictionary<string, object> result)
         {
             throw new NotImplementedException();
+        }
+
+        protected void ParseBaseTypeSyntax(ClassDeclarationSyntax syntax, SemanticModel semanticModel, IDictionary<string, object> result)
+        {
+            if (syntax.BaseList == null)
+            {
+                return;
+            }
+
+            foreach (var baseTypeSyntax in syntax.BaseList.Types)
+            {
+                var symbolInfo = semanticModel.GetSymbolInfo(baseTypeSyntax.Type);
+                if (symbolInfo.Symbol == null || symbolInfo.Symbol.Locations == null)
+                {
+                    continue;
+                }
+
+                foreach (var location in symbolInfo.Symbol.Locations)
+                {
+                    if (location.SourceTree != null)
+                    {
+                        var root = ThreadHelper.JoinableTaskFactory.Run(() => location.SourceTree.GetRootAsync());
+                        var node = root.FindNode(location.SourceSpan);
+                        if (node is ClassDeclarationSyntax classDeclarationSyntax)
+                        {
+                            ParseClassDeclarationSyntax(classDeclarationSyntax, semanticModel, result);
+                        }
+                    }
+                }
+            }
         }
 
         protected object ParsePredefinedTypeProperty(PropertyDeclarationSyntax _, PredefinedTypeSyntax predefinedTypeSyntax)
