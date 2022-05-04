@@ -67,7 +67,7 @@ namespace DocGenerator
                         result.Add(identifier, ParseGenericNameProperty(property, genericNameSyntax, semanticModel));
                         break;
                     case ArrayTypeSyntax arrayTypeSyntax:
-                        result.Add(identifier, ParseArrayTypeProperty(property, arrayTypeSyntax));
+                        result.Add(identifier, ParseArrayTypeProperty(property, arrayTypeSyntax, semanticModel));
                         break;
                 }
             }
@@ -179,9 +179,26 @@ namespace DocGenerator
             return null;
         }
 
-        protected object ParseArrayTypeProperty(PropertyDeclarationSyntax propertyDeclarationSyntax, ArrayTypeSyntax arrayTypeSyntax)
+        protected object ParseArrayTypeProperty(PropertyDeclarationSyntax propertyDeclarationSyntax, ArrayTypeSyntax arrayTypeSyntax, SemanticModel semanticModel)
         {
-            return null;
+            object obj = null;
+            switch (arrayTypeSyntax.ElementType)
+            {
+                case PredefinedTypeSyntax predefinedTypeSyntax:
+                    obj = KeywordDefaultValue.GetValue(predefinedTypeSyntax.GetKeyword());
+                    break;
+                case IdentifierNameSyntax identifierNameSyntax:
+                    obj = ParseIdentifierNameProperty(propertyDeclarationSyntax, identifierNameSyntax, semanticModel);
+                    break;
+                case GenericNameSyntax genericNameSyntax:
+                    obj = ParseGenericNameProperty(propertyDeclarationSyntax, genericNameSyntax, semanticModel);
+                    break;
+                case ArrayTypeSyntax arrayTypeSyntax2:
+                    obj = ParseArrayTypeProperty(propertyDeclarationSyntax, arrayTypeSyntax2, semanticModel);
+                    break;
+            }
+
+            return obj != null ? new[] { obj } : Array.Empty<object>();
         }
     }
 }
