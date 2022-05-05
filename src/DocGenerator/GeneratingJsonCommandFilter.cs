@@ -51,6 +51,8 @@ namespace DocGenerator
 
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             if (pguidCmdGroup == GuidConstant.GeneratingJsonCommandId && nCmdID == 0x100)
             {
                 GenerateContext(x =>

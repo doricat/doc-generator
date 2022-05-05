@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
@@ -14,9 +13,6 @@ namespace DocGenerator
     {
         [Import]
         internal IVsEditorAdaptersFactoryService EditorAdaptersFactoryService { get; set; }
-
-        [Import]
-        internal ITextDocumentFactoryService TextDocumentFactoryService { get; set; }
 
         [Import]
         internal IDictionaryBuilderService DictionaryBuilderService { get; set; }
