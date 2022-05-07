@@ -48,10 +48,13 @@
     <Compile Include="ClipboardSupport.cs" />
     <Compile Include="CommandFilterFactory.cs" />
     <Compile Include="DictionaryBuilderService.cs" />
+    <Compile Include="GeneratedResult.cs" />
     <Compile Include="GeneratingJsonCommandFilter.cs" />
     <Compile Include="GuidConstant.cs" />
     <Compile Include="IDictionaryBuilderService.cs" />
+    <Compile Include="IObjectBuilderService.cs" />
     <Compile Include="KeywordDefaultValue.cs" />
+    <Compile Include="ObjectBuilderService.cs" />
     <Compile Include="PredefinedTypeSyntaxExtensions.cs" />
     <Compile Include="PrgCmdsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
