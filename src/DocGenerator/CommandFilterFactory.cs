@@ -15,12 +15,12 @@ namespace DocGenerator
         internal IVsEditorAdaptersFactoryService EditorAdaptersFactoryService { get; set; }
 
         [Import]
-        internal IDictionaryBuilderService DictionaryBuilderService { get; set; }
+        internal IObjectBuilderService ObjectBuilderService { get; set; }
 
         public void VsTextViewCreated(IVsTextView textViewAdapter)
         {
             var textView = EditorAdaptersFactoryService.GetWpfTextView(textViewAdapter);
-            GeneratingJsonCommandFilter.Register(textViewAdapter, textView, DictionaryBuilderService);
+            GeneratingJsonCommandFilter.Register(textViewAdapter, textView, ObjectBuilderService);
         }
     }
 }

@@ -14,14 +14,14 @@ namespace DocGenerator
     {
         private readonly IOleCommandTarget _nextCommandTargetInChain;
         private readonly IWpfTextView _wpfTextView;
-        private readonly IDictionaryBuilderService _dictionaryBuilderService;
+        private readonly IObjectBuilderService _objectBuilderService;
 
         public GeneratingJsonCommandFilter(IVsTextView textView, 
-            IWpfTextView wpfTextView, 
-            IDictionaryBuilderService dictionaryBuilderService)
+            IWpfTextView wpfTextView,
+            IObjectBuilderService objectBuilderService)
         {
             _wpfTextView = wpfTextView;
-            _dictionaryBuilderService = dictionaryBuilderService;
+            _objectBuilderService = objectBuilderService;
             textView.AddCommandFilter(this, out _nextCommandTargetInChain);
         }
 
@@ -59,11 +59,8 @@ namespace DocGenerator
                 {
                     if (x.IntendedSyntax)
                     {
-                        var dict = _dictionaryBuilderService.GenerateDictionary(x);
-                        if (dict.Any())
-                        {
-                            ClipboardSupport.SetClipboardData(JsonConvert.SerializeObject(dict));
-                        }
+                        var result = _objectBuilderService.GenerateResult(x);
+                        ClipboardSupport.SetClipboardData(JsonConvert.SerializeObject(result));
                     }
                 });
             }
@@ -92,9 +89,9 @@ namespace DocGenerator
             }
         }
 
-        public static void Register(IVsTextView textView, IWpfTextView wpfTextView, IDictionaryBuilderService dictionaryBuilderService)
+        public static void Register(IVsTextView textView, IWpfTextView wpfTextView, IObjectBuilderService objectBuilderService)
         {
-            var _ = new GeneratingJsonCommandFilter(textView, wpfTextView, dictionaryBuilderService);
+            var _ = new GeneratingJsonCommandFilter(textView, wpfTextView, objectBuilderService);
         }
     }
 }

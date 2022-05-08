@@ -1,7 +1,9 @@
-﻿namespace DocGenerator
+﻿using System.Collections;
+
+namespace DocGenerator
 {
     public interface IObjectBuilderService
     {
-        GeneratedResult GenerateResult(SyntaxContext context);
+        IEnumerable GenerateResult(SyntaxContext context);
     }
 }
