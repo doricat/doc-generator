@@ -47,10 +47,8 @@
   <ItemGroup>
     <Compile Include="ClipboardSupport.cs" />
     <Compile Include="CommandFilterFactory.cs" />
-    <Compile Include="DictionaryBuilderService.cs" />
     <Compile Include="GeneratingJsonCommandFilter.cs" />
     <Compile Include="GuidConstant.cs" />
-    <Compile Include="IDictionaryBuilderService.cs" />
     <Compile Include="IObjectBuilderService.cs" />
     <Compile Include="KeywordDefaultValue.cs" />
     <Compile Include="ObjectBuilderService.cs" />
