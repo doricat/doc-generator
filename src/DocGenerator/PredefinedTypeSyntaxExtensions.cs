@@ -14,5 +14,10 @@ namespace DocGenerator
 
             throw new InvalidOperationException();
         }
+
+        public static object GenerateDefaultValue(this PredefinedTypeSyntax syntax)
+        {
+            return KeywordDefaultValue.GetValue(GetKeyword(syntax));
+        }
     }
 }

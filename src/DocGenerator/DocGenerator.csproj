@@ -45,10 +45,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ArrayTypeSyntaxExtensions.cs" />
+    <Compile Include="BaseTypeSyntaxExtensions.cs" />
+    <Compile Include="ClassDeclarationSyntaxExtensions.cs" />
     <Compile Include="ClipboardSupport.cs" />
     <Compile Include="CommandFilterFactory.cs" />
     <Compile Include="GeneratingJsonCommandFilter.cs" />
+    <Compile Include="GenericNameSyntaxExtensions.cs" />
     <Compile Include="GuidConstant.cs" />
+    <Compile Include="IdentifierNameSyntaxExtensions.cs" />
     <Compile Include="IObjectBuilderService.cs" />
     <Compile Include="KeywordDefaultValue.cs" />
     <Compile Include="ObjectBuilderService.cs" />
@@ -60,6 +65,7 @@
     <Compile Include="SymbolExtensions.cs" />
     <Compile Include="SyntaxContext.cs" />
     <Compile Include="TypeExtensions.cs" />
+    <Compile Include="TypeSyntaxExtensions.cs" />
     <Compile Include="WpfTextViewExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
