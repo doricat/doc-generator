@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
