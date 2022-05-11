@@ -1,2 +1,17 @@
 # doc-generator
-Adds support to generate the selected type of document and copy it to clipboard in json or html format.
+添加对选中类型的文档生成支持，并以JSON和HTML的格式复制到剪切板（HTML暂未实现）。
+
+## 实现的功能
+- 对VS编辑器右键上下文菜单添加新的项
+- 当前选择的位置为以下语法元素时可以呈现增加的菜单项
+  - 类
+  - 标识符
+  - 泛型名称
+- 生成当前语法元素的的简单JSON结构（约等于这个类型的JSON序列化结果）
+- 由于是基于语法树操作，不支持当前项目外的类型；只支持简单泛型集合
+
+## 目的
+只是为了快速生成目标类型的JSON结构，用于沟通等。生成HTML结构则是为了粘贴到文档。
+
+## 如何运行
+安装VS SDK，打开项目后调试启动，当前只在VS 2022上调试通过。
