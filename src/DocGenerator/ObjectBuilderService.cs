@@ -17,7 +17,7 @@ namespace DocGenerator
                 return Array.Empty<object>();
             }
 
-            IEnumerable result = null;
+            IEnumerable result;
             var syntax = context.Syntax;
             switch (syntax)
             {
@@ -29,6 +29,9 @@ namespace DocGenerator
                     break;
                 case GenericNameSyntax genericNameSyntax:
                     result = genericNameSyntax.GeneratePropertyCollection(semanticModel.Compilation);
+                    break;
+                default:
+                    result = Array.Empty<object>();
                     break;
             }
 
